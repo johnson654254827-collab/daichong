@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="16" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+  <text x="100" y="80" text-anchor="middle" fill="#64748b" font-size="14" font-family="Arial">微信/支付宝</text>
+  <text x="100" y="105" text-anchor="middle" fill="#475569" font-size="12" font-family="Arial">收款二维码</text>
+  <text x="100" y="130" text-anchor="middle" fill="#475569" font-size="10" font-family="Arial">请替换为真实二维码</text>
+</svg>

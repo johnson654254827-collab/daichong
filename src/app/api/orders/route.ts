@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
   try {
@@ -28,6 +28,11 @@ export async function POST(request: NextRequest) {
       accountInfo,
       contactInfo,
       notes: notes || "",
+    });
+
+    // 异步发送邮件通知（不阻塞响应）
+    import("@/lib/notify").then(({ sendNewOrderEmail }) => {
+      sendNewOrderEmail(order).catch(() => {});
     });
 
     return NextResponse.json(order, { status: 201 });
