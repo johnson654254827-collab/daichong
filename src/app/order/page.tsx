@@ -17,15 +17,18 @@ export default function OrderPage() {
 
   const selectedService = SERVICES.find((s) => s.id === service);
 
+  const EXCHANGE_RATE = 7.3;
+
   const calcFee = () => {
     if (!amount) return 0;
     const amt = Number(amount);
     if (isNaN(amt)) return 0;
-    return Math.round(amt * 0.2);
+    return Math.round(amt * 0.2 * 100) / 100;
   };
 
-  const fee = calcFee();
-  const total = fee + (Number(amount) || 0);
+  const feeUSD = calcFee();
+  const amountUSD = Number(amount) || 0;
+  const totalRMB = Math.round((amountUSD + feeUSD) * EXCHANGE_RATE);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,9 +46,9 @@ export default function OrderPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           service: selectedService?.name || service,
-          amount: Number(amount) || 0,
-          fee,
-          total,
+          amount: amountUSD,
+          fee: feeUSD,
+          total: totalRMB,
           accountInfo,
           contactInfo,
           notes,
@@ -128,7 +131,7 @@ export default function OrderPage() {
           )}
 
           {/* Fee Summary */}
-          {amount && fee > 0 && (
+          {amount && feeUSD > 0 && (
             <div className="animate-scale-in rounded-xl border border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 p-4">
               <div className="flex justify-between text-sm">
                 <span className="text-slate-400">充值金额</span>
@@ -136,13 +139,13 @@ export default function OrderPage() {
               </div>
               <div className="mt-2 flex justify-between text-sm">
                 <span className="text-slate-400">手续费 (20%)</span>
-                <span className="text-blue-400 font-medium">¥{fee}</span>
+                <span className="text-blue-400 font-medium">${feeUSD}</span>
               </div>
               <div className="mt-3 flex justify-between border-t border-slate-700/50 pt-3 font-semibold">
-                <span>合计应付</span>
-                <span className="text-lg text-blue-400">¥{total}</span>
+                <span>合计应付 (CNY)</span>
+                <span className="text-lg text-blue-400">¥{totalRMB}</span>
               </div>
-              <p className="mt-2 text-xs text-slate-500">* 汇率按实时计算，以最终确认为准</p>
+              <p className="mt-2 text-xs text-slate-500">* 汇率 1 USD ≈ ¥7.3，以最终确认为准</p>
             </div>
           )}
 

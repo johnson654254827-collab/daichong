@@ -83,7 +83,7 @@ export function SuccessContent() {
           </h3>
           <div className="mx-auto mb-3 w-48">
             <img
-              src="/qrcode-placeholder.svg"
+              src="/qrcode.png"
               alt="收款二维码"
               className="h-48 w-48 rounded-2xl border border-slate-700 bg-white p-2 object-contain"
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
